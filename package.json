@@ -1,0 +1,11 @@
+{
+  "name": "dbdiagram.io.generator",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Tin Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "dot": "1.1.2",
+    "request": "^2.81.0"
+  }
+}

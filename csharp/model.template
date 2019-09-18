@@ -1,0 +1,25 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+
+namespace CarKiosk.Model
+{
+    [Table("{{=it.tableName}}")]
+    public class {{=it.tableName}}
+    {
+    {{~ it.columns :col}}
+        {{? col.refTable }}
+        [ForeignKey("{{=col.refTable}}")]
+        public {{=col.type}} {{=col.name}} { get; set; }
+        public virtual {{=col.refTable}} {{=col.refTable}} { get; set; }
+        {{?}}
+        {{? !col.refTable }}        
+        {{? col.pk }}[Key]{{?}}
+        {{? col.increment }}[DatabaseGenerated(DatabaseGeneratedOption.Identity)]{{?}}
+        [Column("{{=col.name}}")]
+        public {{=col.type}} {{=col.name}} { get; set; }
+        {{?}}
+    {{~}}
+    }
+}
