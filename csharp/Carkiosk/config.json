@@ -1,0 +1,34 @@
+{
+	"templates": [
+		{
+			"file": "model.template",
+			"is_multiple": true,
+			"file_name": "results/models/{{=it.tableName}}.cs"
+		},
+		{
+			"file": "RepositoryWrapper.template",
+			"is_multiple": false,
+			"file_name": "results/repository/RepositoryWrapper.cs"
+		},
+		{
+			"file": "IRepositoryWrapper.template",
+			"is_multiple": false,
+			"file_name": "results/repository/IRepositoryWrapper.cs"
+		},
+		{
+			"file": "RepositoryContext.template",
+			"is_multiple": false,
+			"file_name": "results/repository/RepositoryContext.cs"
+		},
+		{
+			"file": "IModelRepo.template",
+			"is_multiple": true,
+			"file_name": "results/repository/I{{=it.tableName}}Repository.cs"
+		},
+		{
+			"file": "ModelRepo.template",
+			"is_multiple": true,
+			"file_name": "results/repository/{{=it.tableName}}Repository.cs"
+		}
+	]
+}

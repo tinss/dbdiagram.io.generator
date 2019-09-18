@@ -1,0 +1,16 @@
+using {{=it.id}}.Model;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace {{=it.id}}.Repository
+{
+    public partial class {{=it.tableName}}Repository : RepositoryBase<{{=it.tableName}}>, I{{=it.tableName}}Repository
+    {
+        public {{=it.tableName}}Repository(RepositoryContext repositoryContext)
+            : base(repositoryContext)
+        {
+
+        }
+    }
+}

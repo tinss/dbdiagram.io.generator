@@ -1,0 +1,18 @@
+using {{=it.id}}.Model;
+using {{=it.id}}.Repository.SP;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
+
+namespace {{=it.id}}.Repository
+{
+    public partial class RepositoryContext : IdentityDbContext<User>
+    {
+        public new DbSet<User> Users { get; set; }
+        public new DbSet<Role> Roles { get; set; }
+        public new DbSet<UserRole> UserRoles { get; set; }
+        {{~ it.tables : table}}public DbSet<{{=table.name}}> {{=table.pluralName}} { get; set; }
+        {{~}}
+    }
+}

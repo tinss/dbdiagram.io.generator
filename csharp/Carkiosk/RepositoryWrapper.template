@@ -1,0 +1,32 @@
+using {{=it.id}}.Repository.Identity;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace {{=it.id}}.Repository
+{
+    public partial class RepositoryWrapper : IRepositoryWrapper
+    {
+        #region Repository
+        {{~ it.tables : table}}
+        private I{{=table.name}}Repository _{{=table.camelName}};
+        {{~}}
+
+        {{~ it.tables : table}}
+        public I{{=table.name}}Repository {{=table.name}}
+        {
+            get
+            {
+                if (_{{=table.camelName}} == null)
+                {
+                    _{{=table.camelName}} = new {{=table.name}}Repository(_repoContext);
+                }
+
+                return _{{=table.camelName}};
+            }
+        }
+        {{~}}
+        #endregion
+    }
+}

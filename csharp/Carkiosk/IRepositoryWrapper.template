@@ -1,0 +1,19 @@
+using {{=it.id}}.Repository.Identity;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace {{=it.id}}.Repository
+{
+    public interface IRepositoryWrapper : IDisposable
+    {
+        #region Repositories
+        {{~ it.tables : table}}
+        I{{=table.name}}Repository {{=table.name}} { get; }{{~}}
+        #endregion
+
+        void Save();
+        Task SaveAsync();
+    }
+}

@@ -1,4 +1,7 @@
-const request = require('request');
+const request = require('request')
+const fs = require("fs")
+const path = require("path")
+const pluralize = require('pluralize')
 
 const regAllTables = /table[ ]+([a-z0-9_]+)[ ]*[{]{1}([^}]+)[}]{1}/gmi
 const regAllColumns = /^[ ]*([a-zA-Z0-9_]+)[ ]+([a-zA-Z]+)\(?[0-9]*\)?([ ]+(pk)?([ ]?\[?([^\]]+)\]?)?)?/gmi
@@ -6,11 +9,14 @@ const regRef = /ref:[ ]*\>[ ]*([a-z0-9_-]+)\.([a-z0-9_-]+)/gmi
 const regEmptyLine = /^\s*$(?:[\r\n]{2,}|[\n]{2,})/gm
 
 const parseDbdiagram = function(schemas){
-  let tables = {};
+  let tables = [];
   match = regAllTables.exec(schemas)
   while (match != null) {
     if(match[1]){
-      tables[match[1]] = {columns: []}
+      let table = {name: match[1], 
+                   camelName: match[1].replace(/./,x=>x.toLowerCase()), 
+                   pluralName: pluralize(match[1]),
+                   columns: []}
       if(match[2]){
         //console.log(match[2])
         matchCols = regAllColumns.exec(match[2])
@@ -34,18 +40,26 @@ const parseDbdiagram = function(schemas){
               }else if(opt == 'increment'){
                 col.increment = true
               }else{
-                let tmp = regRef.exec(opt)
+                let tmp = /ref:[ ]*\>[ ]*([a-z0-9_-]+)\.([a-z0-9_-]+)/gmi.exec(opt)
                 if(tmp != null){
                   col.refTable = tmp[1]
                   col.refCol = tmp[2]
+
+                  if(col.refTable == table.name){
+                    col.refTableName = 'Parent'
+                  }else{
+                    col.refTableName = col.refTable
+                  }
                 }
               }
             }
           }
-          tables[match[1]].columns.push(col)
+          table.columns.push(col)
           matchCols = regAllColumns.exec(match[2])
         }
       }
+
+      tables.push(table)
     }
     match = regAllTables.exec(schemas)
   }
@@ -82,7 +96,6 @@ const getSchemasFromId = function(id, callback){
             callback(err);
         });
 }
-
 
 exports.parseDbdiagram = parseDbdiagram
 exports.removeEmptyLines = removeEmptyLines

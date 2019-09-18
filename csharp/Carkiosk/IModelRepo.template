@@ -1,0 +1,10 @@
+using {{=it.id}}.Model;
+using System.Threading.Tasks;
+
+namespace {{=it.id}}.Repository
+{
+    public partial interface I{{=it.tableName}}Repository : IRepositoryBase<{{=it.tableName}}>
+    {
+        
+    }
+}
